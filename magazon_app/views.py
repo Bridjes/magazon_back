@@ -6,14 +6,22 @@ from .serializers import *
 from .models import *
 
 ####### "ЛЕГКОВЫЕ АВТО" #######
+# вывод списка автомобилей
 class CarRetrieveView(generics.ListAPIView):
     queryset = Car.objects.all()
     serializer_class = CarRetrieveSerializer
 
-class CarCreate(generics.CreateAPIView):
+# создать новый автомобиль
+class CarCreateView(generics.CreateAPIView):
     queryset = Car.objects.all()
-    serializer_class = CarRetrieveSerializer
-    # permission_classes = (IsAuthenticated, )
+    serializer_class = CarCreateSerializer
+    permission_classes = (IsAuthenticated, )
+
+# обновить указанный автомобиль
+class CarUpdateView(generics.UpdateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarUpdateSerializer
+    permission_classes = (IsAuthenticated, )
 
 ####### Регистрация пользователей #######
 class CreateUserView(generics.CreateAPIView):

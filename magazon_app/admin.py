@@ -55,15 +55,6 @@ class MotorbikeAdmin(admin.ModelAdmin):
 ######## НЕДВИЖИМОСТЬ ########
 
 # ________ Квартиры __________
-admin.site.register(ApartmentDealType)          # тип сделки
-admin.site.register(ApartmentRooms)             # количество комнат
-admin.site.register(ApartmentLayout)            # вид планировки
-admin.site.register(ApartmentFloors)            # этажность
-admin.site.register(ApartmentCeilingHeight)     # высота потолков
-admin.site.register(ApartmentWallMaterial)      # материал стен
-admin.site.register(ApartmentSalesman)          # продавец
-
-# Квартиры
 @admin.register(Apartment)
 class ApartmentAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Apartment._meta.get_fields()]
@@ -82,21 +73,17 @@ class GarageAdmin(admin.ModelAdmin):
 ######## ЭЛЕКТРОНИКА ########
 
 # ______ Аудиотехника _______
-admin.site.register(AudioType)      # тип
-admin.site.register(AudioState)     # состояние
-
-# аудиотехника
 @admin.register(Audio)
 class AudioAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Audio._meta.get_fields()]
 
 # ________ Наушники __________
 
-admin.site.register(HeadphonesType)             # тип
-admin.site.register(HeadphonesManufacturer)     # производитель
-admin.site.register(HeadphonesConnector)        # тип разъема
-admin.site.register(HeadphonesPurpose)          # назначение
-admin.site.register(HeadphonesFastening)        # крепление
+# производитель наушников
+@admin.register(HeadphonesBrand)
+class HeadphonesBrandAdmin(admin.ModelAdmin):
+    list_display = ('value',)
+    search_fields = ('value',)
 
 # наушники
 @admin.register(Headphones)
@@ -105,8 +92,20 @@ class HeadphonesAdmin(admin.ModelAdmin):
 
 # ________ ТВ и видеотехника __________
 
-admin.site.register(VideoEquipmentType)             # тип
-admin.site.register(VideoEquipmentManufacturer)     # производитель
+class VideoEquipmentManufacturerInline(admin.TabularInline):
+    model = VideoEquipmentManufacturer
+
+# тип
+@admin.register(VideoEquipmentType)
+class VideoEquipmentTypeAdmin(admin.ModelAdmin):
+    inlines = [VideoEquipmentManufacturerInline]
+    list_display = ('value',)
+
+# производитель
+@admin.register(VideoEquipmentManufacturer)
+class VideoEquipmentManufacturerAdmin(admin.ModelAdmin):
+    list_display = ('value', 'type')
+    search_fields = ('value', 'type')
 
 # ТВ и видеотехника
 @admin.register(VideoEquipment)
@@ -116,20 +115,11 @@ class VideoEquipmentAdmin(admin.ModelAdmin):
 ############## МЕБЕЛЬ ##############
 
 # _______ банкетки и пуфики ________
-
-admin.site.register(OttomansType)     # тип банкеток и пуфиков
-
-# банкетки и пуфики
 @admin.register(Ottomans)
 class OttomansAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Ottomans._meta.get_fields()]
 
 # _______ Вешалки, прихожие ________
-
-admin.site.register(HangerType)         # тип вешалки, прихожей
-admin.site.register(HangerFastening)    # способ крепления
-
-# вешалки, прихожие
 @admin.register(Hanger)
 class HangerAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Hanger._meta.get_fields()]

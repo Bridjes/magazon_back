@@ -3,7 +3,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import *
 
 urlpatterns = [
-    path('v1/cars', CarRetrieveView.as_view()),
+    path('v1/cars/retrieve/', CarRetrieveView.as_view()),
+    path('v1/cars/create/', CarCreateView.as_view()),
+    path('v1/cars/update/<int:pk>', CarUpdateView.as_view()),
 
     path('v1/user/register/', CreateUserView.as_view()),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
