@@ -6,37 +6,13 @@ from .models_lists import *
 ########## АВТО И ТРАНСПОРТ ###########
 
 # ___________легковые авто_____________
-# марки легковых авто
-class CarBrand(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name="Марка")
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        verbose_name = "Марку"
-        verbose_name_plural = "Легковые авто - Марки"
-
-# Модели легковых авто
-class CarModel(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Модель")
-    car_brand = models.ForeignKey(CarBrand, verbose_name="Марка", on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        verbose_name = "Модель"
-        verbose_name_plural = "Легковые авто - Модели"
-
-# легковые авто
 class Car(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Car', null=True)
     category = models.CharField(max_length=100, verbose_name="Категория", choices=CATEGORY, default="Авто и транспорт")
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="Легковые авто")
-    brand = models.ForeignKey(CarBrand, on_delete=models.PROTECT, verbose_name="Марка")
-    model = models.ForeignKey(CarModel, on_delete=models.PROTECT, verbose_name="Модель")
+    brand = models.CharField(max_length=100, verbose_name="Марка", choices=CAR_BRAND)
+    model = models.CharField(max_length=100, verbose_name="Модель", choices=CAR_MODEl)
     body_type = models.CharField(max_length=200, verbose_name="Тип кузова", choices=CAR_BODY_TYPE)
     color = models.CharField(max_length=200, verbose_name="Цвет", choices=CAR_COLOR)
     engine_type = models.CharField(max_length=200, verbose_name="Тип двигателя", choices=CAR_ENGIN_TYPE)

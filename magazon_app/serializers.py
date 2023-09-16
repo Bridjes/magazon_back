@@ -7,60 +7,11 @@ from .models import *
 
 ###### ЛЕГКОВЫЕ АВТО ######
 
-# вывод марки(ок) авто
-class CarBrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarBrand
-        fields = ('name',)
-
-# вывод модели(ей) авто
-class CarModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarModel
-        fields = ('name',)
-
 # вывод списка автомобилей
 class CarRetrieveSerializer(serializers.ModelSerializer):
-    brand = CarBrandSerializer(read_only=True)
-    model = CarModelSerializer(read_only=True)
     class Meta:
         model = Car
-        fields = (
-            'title',
-            'category',
-            'subcategory',
-            'brand',
-            'model',
-            'body_type',
-            'color',
-            'engine_type',
-            'drive_unit',
-            'transmission',
-            'engine_volume',
-            'year',
-            'mileage',
-            'air_conditioner',
-            'seat_heating',
-            'abs_esp_asr',
-            'regular_navigation',
-            'alloy_wheels',
-            'parctronic_camera',
-            'sunroof',
-            'theft_protection',
-            'xenon',
-            'cruise_control',
-            'aux_usb_bluetooth',
-            'state',
-            'vin',
-            'description',
-            'price',
-            'exchange',
-            'leasing',
-            'installment_plan',
-            'city',
-            'grade',
-            'user_create',
-        )
+        fields = '__all__'
 
 # запись нового автомобиля в БД
 class CarCreateSerializer(serializers.ModelSerializer):
@@ -89,6 +40,11 @@ class CarUpdateSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
+        # убираем ключи со значениями None из словаря
+        for key, value in list(validated_data.items()):
+            if value is None:
+                del validated_data[key]
+
         instance.title = validated_data.get('title', instance.title)
         instance.photo = validated_data.get('photo', instance.photo)
         instance.brand = validated_data.get('brand', instance.brand)
@@ -167,3 +123,15 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+######### КАСТОМИЗАЦИЯ JWT-ТОКЕНОВ #########
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token

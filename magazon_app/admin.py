@@ -4,22 +4,6 @@ from .models import *
 ######## Транспорт ########
 #_____ Легковые авто ______
 
-class CarModelInline(admin.TabularInline):
-    model = CarModel
-
-# марка легкового авто
-@admin.register(CarBrand)
-class CarBrandAdmin(admin.ModelAdmin):
-    inlines = [CarModelInline]
-    list_display = ('name',)
-    search_fields = ('name',)
-
-# модель легкового авто
-@admin.register(CarModel)
-class CarModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'car_brand')
-    search_fields = ('name', 'car_brand__name')
-
 # легковые авто
 @admin.register(Car)
 class CarsAdmin(admin.ModelAdmin):
