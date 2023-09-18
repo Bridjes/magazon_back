@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -84,23 +85,23 @@ WSGI_APPLICATION = 'magazon_back.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magazon',
-        'USER': CFG_USER,
-        'PASSWORD': CFG_PASSWORD,
-        'HOST': CFG_HOST,
-        'PORT': CFG_PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'magazon',
+#         'USER': CFG_USER,
+#         'PASSWORD': CFG_PASSWORD,
+#         'HOST': CFG_HOST,
+#         'PORT': CFG_PORT,
+#     }
+# }
 
 
 # Password validation
@@ -195,3 +196,5 @@ MEDIA_URL = "D:/Magazon_images/"
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+AUTH_USER_MODEL = 'users.User'

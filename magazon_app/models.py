@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from users.models import User
 from .models_lists import *
 
 ########## АВТО И ТРАНСПОРТ ###########
@@ -51,24 +50,12 @@ class Car(models.Model):
         verbose_name_plural = "Легковые авто"
 
 # ___________грузовые авто_____________
-# марки грузовых авто
-class TruckBrand(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name="Марка")
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        verbose_name = "Марку"
-        verbose_name_plural = "Грузовые авто - Марки"
-
-# грузовые авто
 class Truck(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Truck', null=True)
     category = models.CharField(max_length=100, verbose_name="Категория", choices=CATEGORY, default="Авто и транспорт")
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="Грузовики и автобусы")
-    brand = models.ForeignKey(TruckBrand, on_delete=models.PROTECT, verbose_name="Марка")
+    brand = models.CharField(max_length=100, verbose_name="Марка", choices=TRUCK_BRAND)
     type = models.CharField(max_length=200, verbose_name="Тип грузовика", choices=TRUCK_TYPE)
     load_capacity = models.CharField(max_length=200, verbose_name="Грузоподъемность", choices=TRUCK_LOAD_CAPACITY)
     transmission = models.CharField(max_length=200, verbose_name="Коробка передач", choices=TRUCK_TRANSMISSION)
@@ -92,25 +79,13 @@ class Truck(models.Model):
         verbose_name_plural = "Грузовые авто"
 
 # ___________ мототехника _____________
-
-# марка мотоцикла
-class MotorbikeBrand(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name="Марка")
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        verbose_name = "Марку"
-        verbose_name_plural = "Мотоциклы - Марки"
-
 # мотоциклы
 class Motorbike(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Motobike', null=True)
     category = models.CharField(max_length=100, verbose_name="Категория", choices=CATEGORY, default="Авто и транспорт")
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="Мотоциклы")
-    brand = models.ForeignKey(MotorbikeBrand, on_delete=models.PROTECT, verbose_name="Марка")
+    brand = models.CharField(max_length=100, verbose_name="Марка", choices=MOTOBIKE_BRAND)
     type = models.CharField(max_length=50, verbose_name="Тип мотоцикла", choices=MOTOBIKE_TYPE)
     truck_dive_unit = models.CharField(max_length=50, verbose_name="Привод", choices=MOTOBILE_DRIVE_UNIT)
     number_cycles = models.CharField(max_length=50, verbose_name="Количество тактов", choices=MOTOBIKE_NUMBER_CYCLES)
@@ -166,7 +141,6 @@ class Apartment(models.Model):
         verbose_name_plural = "Квартиры"
 
 # ___________ Дома, дачи, коттеджи ____________
-
 class Cottage(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Cottage', null=True)
@@ -237,19 +211,6 @@ class Audio(models.Model):
         verbose_name_plural = "Аудиотехника"
 
 # _______ Наушники ___________
-
-# производитель наушников
-class HeadphonesBrand(models.Model):
-    value = models.CharField(max_length=150, unique=True, verbose_name="Производитель")
-
-    def __str__(self):
-        return str(self.value)
-
-    class Meta:
-        verbose_name = "Производителя"
-        verbose_name_plural = "Наушники - Производители"
-
-# наушники
 class Headphones(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Headphones', null=True)
@@ -257,7 +218,7 @@ class Headphones(models.Model):
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="Наушники")
     type = models.CharField(max_length=100, verbose_name="Тип", choices=HEADPHONES_TYPE)
     wireless = models.BooleanField(verbose_name="Беспроводные")
-    brand = models.ForeignKey(HeadphonesBrand, on_delete=models.PROTECT, verbose_name="Производитель")
+    brand = models.CharField(max_length=100, verbose_name="Производитель", choices=HEADPHONES_BRAND)
     connector = models.CharField(max_length=100, verbose_name="Тип разъёма", choices=HEADPHONES_CONNECTOR)
     purpose = models.CharField(max_length=100, verbose_name="Назначение", choices=HEADPHONES_PURPOSE)
     fastening = models.CharField(max_length=100, verbose_name="Крепление", choices=HEADPHONES_FASTENING)
@@ -285,37 +246,13 @@ class Headphones(models.Model):
         verbose_name_plural = "Наушники"
 
 # ________ ТВ и видеотехника __________
-
-# тип видеотехники
-class VideoEquipmentType(models.Model):
-    value = models.CharField(max_length=150, unique=True, verbose_name="Тип")
-
-    def __str__(self):
-        return str(self.value)
-
-    class Meta:
-        verbose_name = "Тип"
-        verbose_name_plural = "ТВ и видеотехника - Типы"
-
-# производитель видеотехники
-class VideoEquipmentManufacturer(models.Model):
-    value = models.CharField(max_length=150, verbose_name="Производитель")
-    type = models.ForeignKey(VideoEquipmentType, on_delete=models.SET_NULL, verbose_name="Тип", null=True)
-    def __str__(self):
-        return str(self.value)
-
-    class Meta:
-        verbose_name = "Производителя"
-        verbose_name_plural = "ТВ и видеотехника - Производители"
-
-# ТВ и видеотехника
 class VideoEquipment(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='VideoEquipment', null=True)
     category = models.CharField(max_length=100, verbose_name="Категория", choices=CATEGORY, default="Электроника")
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="ТВ и видеотехника")
-    type = models.ForeignKey(VideoEquipmentType, on_delete=models.PROTECT, verbose_name="Тип")
-    manufacturer = models.ForeignKey(VideoEquipmentManufacturer, on_delete=models.PROTECT, verbose_name="Производитель")
+    type = models.CharField(max_length=100, verbose_name="Тип", choices=VIDEO_EQUIPMENT_TYPE)
+    manufacturer = models.CharField(max_length=100, verbose_name="Производитель", choices=VIDEO_EQUIPMENT_BRAND)
     state = models.CharField(max_length=50, verbose_name="Состояние", choices=AUDIO_STATE)
     description = models.TextField(verbose_name="Описание")
     price = models.FloatField(verbose_name="Цена")
@@ -335,8 +272,6 @@ class VideoEquipment(models.Model):
 ############## МЕБЕЛЬ ##############
 
 # _______ банкетки и пуфики ________
-
-# банкетки и пуфики
 class Ottomans(models.Model):
     title = models.CharField(max_length=50, unique=True, verbose_name="Название товара/услуги")
     photo = models.ImageField(upload_to='Ottomans', null=True)

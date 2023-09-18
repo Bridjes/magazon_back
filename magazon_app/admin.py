@@ -2,35 +2,18 @@ from django.contrib import admin
 from .models import *
 
 ######## Транспорт ########
-#_____ Легковые авто ______
 
-# легковые авто
+#_____ Легковые авто ______
 @admin.register(Car)
 class CarsAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Car._meta.get_fields()]
 
 #_____ Грузовые авто ______
-
-# марка грузового авто
-@admin.register(TruckBrand)
-class TruckBrandAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-
-# грузовые авто
 @admin.register(Truck)
 class TruckAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Truck._meta.get_fields()]
 
 #_______ Мотоциклы _________
-
-# марки мотоциклов
-@admin.register(MotorbikeBrand)
-class TruckBrandAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-
-# мотоциклы
 @admin.register(Motorbike)
 class MotorbikeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Motorbike._meta.get_fields()]
@@ -62,36 +45,11 @@ class AudioAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Audio._meta.get_fields()]
 
 # ________ Наушники __________
-
-# производитель наушников
-@admin.register(HeadphonesBrand)
-class HeadphonesBrandAdmin(admin.ModelAdmin):
-    list_display = ('value',)
-    search_fields = ('value',)
-
-# наушники
 @admin.register(Headphones)
 class HeadphonesAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Headphones._meta.get_fields()]
 
 # ________ ТВ и видеотехника __________
-
-class VideoEquipmentManufacturerInline(admin.TabularInline):
-    model = VideoEquipmentManufacturer
-
-# тип
-@admin.register(VideoEquipmentType)
-class VideoEquipmentTypeAdmin(admin.ModelAdmin):
-    inlines = [VideoEquipmentManufacturerInline]
-    list_display = ('value',)
-
-# производитель
-@admin.register(VideoEquipmentManufacturer)
-class VideoEquipmentManufacturerAdmin(admin.ModelAdmin):
-    list_display = ('value', 'type')
-    search_fields = ('value', 'type')
-
-# ТВ и видеотехника
 @admin.register(VideoEquipment)
 class VideoEquipmentAdmin(admin.ModelAdmin):
     list_display = [field.name for field in VideoEquipment._meta.get_fields()]
