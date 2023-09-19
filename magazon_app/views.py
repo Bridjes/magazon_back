@@ -5,6 +5,7 @@ from rest_framework.permissions import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt import tokens, views
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import *
 from .models import *
@@ -32,6 +33,10 @@ class CarUpdateView(generics.UpdateAPIView):
 class CreateUserView(generics.CreateAPIView):
     model = User
     serializer_class = UserSerializer
+
+# login
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 # logout
 class LogoutView(APIView):

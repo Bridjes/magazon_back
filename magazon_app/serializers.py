@@ -124,6 +124,13 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+####### АВТОРИЗАЦИЯ ПОЛЬЗОВАТЕЛЕЙ #######
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['username'] = self.user.username
+        return data
+
 ######### КАСТОМИЗАЦИЯ JWT-ТОКЕНОВ #########
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

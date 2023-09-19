@@ -37,8 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
     class Meta:
-        verbose_name = "Пользователи"
-        verbose_name_plural = "Пользователь"
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -60,7 +60,8 @@ class UserManager(BaseUserManager):
             **extra_fields
         )
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
+        # user.save(using=self._db)
         return user
     def create_user(self, email, username, full_name, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
