@@ -32,7 +32,7 @@ class Car(models.Model):
     cruise_control= models.BooleanField(verbose_name="Круиз-контроль")
     aux_usb_bluetooth = models.BooleanField(verbose_name="AUX / USB / Bluetooth")
     state = models.CharField(max_length=200, verbose_name="Состояние", choices=CAR_STATE)
-    vin = models.CharField(max_length=150, unique=True, verbose_name="Номер VIN")
+    vin = models.CharField(max_length=150, unique=True, verbose_name="Номер VIN", blank=True, null=True)
     description = models.TextField(verbose_name="Описание")
     price = models.FloatField(verbose_name="Цена")
     exchange = models.BooleanField(verbose_name="Возможен обмен")
