@@ -179,7 +179,7 @@ class MotorbikeUpdateSerializer(serializers.ModelSerializer):
         instance.subcategory = validated_data.get('subcategory', instance.subcategory)
         instance.brand = validated_data.get('brand', instance.brand)
         instance.type = validated_data.get('type', instance.type)
-        instance.truck_dive_unit = validated_data.get('truck_dive_unit', instance.truck_dive_unit)
+        instance.dive_unit = validated_data.get('dive_unit', instance.dive_unit)
         instance.number_cycles = validated_data.get('number_cycles', instance.number_cycles)
         instance.number_cylinders = validated_data.get('number_cylinders', instance.number_cylinders)
         instance.number_volume = validated_data.get('number_volume', instance.number_volume)
