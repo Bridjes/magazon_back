@@ -87,7 +87,7 @@ class Motorbike(models.Model):
     subcategory = models.CharField(max_length=100, verbose_name="Подкатегория", choices=SUBCATEGORY, default="Мотоциклы")
     brand = models.CharField(max_length=100, verbose_name="Марка", choices=MOTOBIKE_BRAND)
     type = models.CharField(max_length=50, verbose_name="Тип мотоцикла", choices=MOTOBIKE_TYPE)
-    truck_dive_unit = models.CharField(max_length=50, verbose_name="Привод", choices=MOTOBILE_DRIVE_UNIT)
+    dive_unit = models.CharField(max_length=50, verbose_name="Привод", choices=MOTOBILE_DRIVE_UNIT)
     number_cycles = models.CharField(max_length=50, verbose_name="Количество тактов", choices=MOTOBIKE_NUMBER_CYCLES)
     number_cylinders = models.CharField(max_length=50, verbose_name="Количество цилиндров", choices=MOTOBIKE_NUMBER_CYLINDERS)
     number_volume = models.CharField(max_length=50, verbose_name="Объём, см³", choices=MOTOVIKE_VOLUME)
